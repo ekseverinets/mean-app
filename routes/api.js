@@ -9,7 +9,7 @@ function isAuthenticated (req, res, next) {
 	// request and response objects
 
 	//allow all get request methods
-	if(req.method === "GET"){
+	if(req.method === 'GET'){
 		return next();
 	}
 	if (req.isAuthenticated()){
@@ -18,7 +18,7 @@ function isAuthenticated (req, res, next) {
 
 	// if the user is not authenticated then redirect him to the login page
 	return res.redirect('/#login');
-};
+}
 
 //Register the authentication middleware
 router.use('/posts', isAuthenticated);
@@ -39,9 +39,9 @@ router.route('/posts')
 	})
 	//gets all posts
 	.get(function(req, res){
-		console.log('debug1');
+		// console.log('debug1');
 		Post.find(function(err, posts){
-			console.log('debug2');
+			// console.log('debug2');
 			if(err){
 				return res.send(500, err);
 			}
@@ -83,7 +83,7 @@ router.route('/posts/:id')
 		}, function(err) {
 			if (err)
 				res.send(err);
-			res.json("deleted :(");
+			res.json('deleted :(');
 		});
 	});
 
