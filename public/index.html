@@ -3,13 +3,14 @@
         <title>App</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+        <script src="//d3js.org/d3.v3.min.js"></script>
 		<script src="javascripts/mainApp.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<link rel="stylesheet" href="stylesheets/style.css">
 	</head>
     <body ng-app="mainApp">
-		<div id='main' class="container">
+		<div id='main' class="main container">
 			<nav class="navbar-fluid navbar-default navbar-fixed-top">
 				<div class="container">
 					<a class="navbar-brand" href="#">Post App</a>
@@ -19,10 +20,15 @@
 					<p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user}}</p>
 				</div>
 			</nav>
-			<div class="col-md-offset-2 col-md-8">
+			<div class="col-md-6">
 				<div ng-view>
 				</div>
-			</div>
-		</div>
+            </div>
+            <div class="col-md-6">
+                <div class="d3-block">
+                    <p>You can relax here waiting for an answer</p>
+                </div>
+            </div>
+        </div>
 	</body>
 </html>
