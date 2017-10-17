@@ -16,3 +16,6 @@ var userSchema = new mongoose.Schema({
 
 mongoose.model('Post', postSchema);
 mongoose.model('User', userSchema);
+
+module.exports.Post = mongoose.model('Post', postSchema);
+module.exports.User = mongoose.model('User', userSchema);

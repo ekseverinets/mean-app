@@ -3,5 +3,5 @@
     "minified": false,
     "sourceMap": false,
     "watchFolder": "public/less",
-    "outputFolder": "public/stylesheets"
+    "outputFolder": "public"
 }

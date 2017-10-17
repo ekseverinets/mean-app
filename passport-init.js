@@ -50,7 +50,6 @@ module.exports = function(passport){
 		passReqToCallback : true // allows us to pass back the entire request to the callback
 	},
 	function(req, username, password, done) {
-
 		// find a user in mongo with provided username
 		User.findOne({ 'username' :  username }, function(err, user) {
 			// In case of any error, return using the done method
