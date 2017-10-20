@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
-// var Post = require('../models/models').Post;
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Post = mongoose.model('Post');
 
 //Used for routes that must be authenticated.
 function isAuthenticated(req, res, next) {
@@ -12,9 +11,6 @@ function isAuthenticated(req, res, next) {
 
 	//allow all get request methods
 	if (req.method === 'GET') {
-		return next();
-	}
-	if (req.method === 'POST') {
 		return next();
 	}
 	if (req.isAuthenticated()) {
@@ -30,8 +26,8 @@ router.use('/posts', isAuthenticated);
 
 //creates a new post
 router.post('/posts', function (req, res) {
-	console.log('Hi');
-	var post = {};
+	console.log('debug');
+	let post = {};
 	post.text = req.body.text;
 	post.created_by = req.body.created_by;
 	post.created_at = Date.now();

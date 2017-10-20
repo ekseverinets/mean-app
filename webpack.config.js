@@ -1,3 +1,6 @@
+// const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 module.exports = {
     entry: './public/mainApp.js',
     output: {
@@ -14,25 +17,27 @@ module.exports = {
                         presets: ['es2015']
                     }
                 }
-                }, 
-                {
+            },
+            {
                 test: /\.scss$/,
-                loader: 'style!css!less'
-                },
-                {
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    //resolve-url-loader may be chained before sass-loader if necessary
+                    use: ['css-loader', 'sass-loader']
+                })
+            },
+            {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-                },
-                {
-                test: /\.(woff|woff2|ttf|svg|eot)$/, 
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
+            },
+            {
+                test: /\.(woff|woff2|ttf|svg|eot)$/,
                 loader: 'url-loader'
-                },
-                // Bootstrap 3 
-                { 
-                test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, 
-                loader: 'imports-loader?jQuery=jquery' 
-                },
-                {
+            },
+            {
                 test: /\.(html)$/,
                 use: {
                     loader: 'html-loader',
@@ -40,11 +45,21 @@ module.exports = {
                         attrs: [':data-src']
                     }
                 },
-                },
-                { 
-                    test: /[\/]angular\.js$/, 
-                    loader: "exports?angular" 
-                }
-            ]
-    } 
+            },
+            {
+                test: /[\/]angular\.js$/,
+                loader: "exports?angular"
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {}
+                }]
+            }
+        ]
+    },
+    plugins: [
+        new ExtractTextPlugin("styles.css")
+    ]
 }

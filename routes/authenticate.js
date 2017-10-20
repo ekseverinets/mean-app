@@ -1,16 +1,22 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-module.exports = function(passport){
+module.exports = function (passport) {
 
 	//sends successful login state back to angular
-	router.get('/success', function(req, res){
-		res.send({ state: 'success' });
+	router.get('/success', function (req, res) {
+		res.send({
+			state: 'success'
+		});
 	});
 
 	//sends failure login state back to angular
-	router.get('/failure', function(req, res){
-		res.send({state: 'failure', user: null, message: 'Invalid username or password'});
+	router.get('/failure', function (req, res) {
+		res.send({
+			state: 'failure',
+			user: null,
+			message: 'Invalid username or password'
+		});
 	});
 
 	//log in
@@ -26,7 +32,7 @@ module.exports = function(passport){
 	}));
 
 	//log out
-	router.get('/signout', function(req, res) {
+	router.get('/signout', function (req, res) {
 		req.logout();
 		res.redirect('/');
 	});

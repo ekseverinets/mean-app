@@ -5,11 +5,11 @@ import ngResource from 'angular-resource';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/style.css';
 
-
 let app = angular.module('mainApp', ['ngRoute', 'ngResource']).run(function ($rootScope, $http) {
 	$rootScope.authenticated = false;
 	$rootScope.current_user = '';
 
+	//Local storage
 	$rootScope.signout = function () {
 		$http.get('auth/signout');
 		$rootScope.authenticated = false;
@@ -42,7 +42,9 @@ app.config(function ($routeProvider) {
 });
 
 app.factory('postService', function ($resource) {
-	var Post = $resource('/api/posts', { "content-type": "application/json"}, {
+	let Post = $resource('/api/posts', {
+		"content-type": "application/json"
+	}, {
 		//Actions
 		query: {
 			method: 'GET',
@@ -62,7 +64,7 @@ app.factory('postService', function ($resource) {
 app.controller('mainController', function (postService, $scope, $rootScope, $http) {
 
 	if (localStorage.getItem('user')) {
-		var user = localStorage.getItem('user');
+		let user = localStorage.getItem('user');
 		$rootScope.current_user = user;
 		$rootScope.authenticated = true;
 	}
@@ -107,6 +109,8 @@ app.controller('authController', function ($scope, $http, $rootScope, $location)
 				$location.path('/');
 			} else {
 				$scope.error_message = data.message;
+				$scope.user.username = '';
+				$scope.user.password = '';
 			}
 		}, (err) => {
 			console.log(err);

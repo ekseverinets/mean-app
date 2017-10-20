@@ -16,10 +16,7 @@ const app = express();
 
 // app.use(logger('dev'));
 app.use(session({
-	secret: 'keyboard cat',
-	resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+	secret: 'keyboard cat'
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
