@@ -582,55 +582,61 @@ app.config(function ($routeProvider) {
 });
 
 app.factory('postService', function ($resource) {
-	return $resource('/api/posts/:id');
+	var Post = $resource('/api/posts', { "content-type": "application/json" }, {
+		//Actions
+		query: {
+			method: 'GET',
+			isArray: true
+		},
+		getById: {
+			method: 'GET'
+		},
+		save: {
+			method: 'POST'
+		}
+	});
+
+	return Post;
 });
 
 app.controller('mainController', function (postService, $scope, $rootScope, $http) {
 
-	if (localStorage.getItem('user') !== null) {
+	if (localStorage.getItem('user')) {
 		var user = localStorage.getItem('user');
 		$rootScope.current_user = user;
 		$rootScope.authenticated = true;
 	}
 
 	$scope.posts = postService.query();
+
 	$scope.newPost = {
 		created_by: '',
 		text: '',
 		created_at: ''
 	};
 
+	// $scope.post = function () {
+	// 	$scope.newPost.created_by = $rootScope.current_user;
+	// 	$scope.newPost.created_at = Date.now();
+
+	// 	const post = postService.save((res) => {
+	// 		console.log(res);
+	// 	});
+	// };
+
 	$scope.post = function () {
 		console.log('post');
 		$scope.newPost.created_by = $rootScope.current_user;
 		$scope.newPost.created_at = Date.now();
-		$http.post('/api/posts', $scope.newPost).then(function (res) {
-
+		postService.save($scope.newPost, function () {
+			$scope.posts = postService.query();
 			$scope.newPost = {
 				created_by: '',
 				text: '',
 				created_at: ''
 			};
-
-			console.log($scope.newPost);
-		}, function (err) {
-			console.log(err);
 		});
 	};
-
-	// $scope.post = function () {
-	// 	console.log('post');
-	// 	$scope.newPost.created_by = $rootScope.current_user;
-	// 	$scope.newPost.created_at = Date.now();
-	// 	postService.save($scope.newPost, function () {
-	// 		$scope.posts = postService.query();
-	// 		$scope.newPost = {
-	// 			created_by: '',
-	// 			text: '',
-	// 			created_at: ''
-	// 		};
-	// 	});
-	// };
 });
 
 app.controller('authController', function ($scope, $http, $rootScope, $location) {
